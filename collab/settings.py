@@ -204,7 +204,6 @@ COLLAB_CONTEXT = {
 }
 
 from collab.local_settings import *
-from collab.local_apps import *
 
 if 'test' in sys.argv:
     from collab.test_settings import *
@@ -218,3 +217,8 @@ from settings_helper import load_app_middlewares
 MIDDLEWARE_CLASSES = load_app_middlewares(MIDDLEWARE_CLASSES)
 
 COMMENTS_APP = 'core.custom_comments'
+
+# Include any settings files from our apps
+from glob import glob
+for app_settings_path in glob(os.path.join(PROJECT_PATH, 'collab/app_settings/*.py')):
+    execfile(app_settings_path)
